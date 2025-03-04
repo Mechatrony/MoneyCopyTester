@@ -6,7 +6,6 @@ using Backtester.Contracts.Services;
 using Backtester.Crypto.Exchange;
 using Backtester.Models;
 using Backtester.Services;
-using Backtester.ViewModels;
 using Backtester.ViewModels.Pages;
 using Backtester.Views.Pages;
 
@@ -64,8 +63,8 @@ public partial class App : Application
                     services.AddTransient<SettingsPage>();
                     services.AddTransient<MainPageViewModel>();
                     services.AddTransient<MainPage>();
-                    services.AddTransient<CoinPageViewModel>();
-                    services.AddTransient<CoinPage>();
+                    services.AddTransient<LogPageViewModel>();
+                    services.AddTransient<LogPage>();
 
                     // Configuration
                     services.Configure<LocalSettingsOptions>(context.Configuration.GetSection(nameof(LocalSettingsOptions)));

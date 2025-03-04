@@ -55,15 +55,15 @@ public class NavigationViewService : INavigationViewService
     {
         if (args.IsSettingsInvoked)
         {
-            navigationService.NavigateTo(typeof(SettingsPageViewModel).FullName!);
+            navigationService.NavigateTo(typeof(SettingsPageViewModel));
         }
         else
         {
             NavigationViewItem? selectedItem = args.InvokedItemContainer as NavigationViewItem;
 
-            if (selectedItem?.GetValue(NavigationHelper.NavigateToProperty) is string pageKey)
+            if (selectedItem?.GetValue(NavigationHelper.NavigateToProperty) is Type viewModelType)
             {
-                navigationService.NavigateTo(pageKey);
+                navigationService.NavigateTo(viewModelType);
             }
         }
     }
@@ -89,9 +89,9 @@ public class NavigationViewService : INavigationViewService
 
     private bool IsMenuItemForPageType(NavigationViewItem menuItem, Type sourcePageType)
     {
-        if (menuItem.GetValue(NavigationHelper.NavigateToProperty) is string pageKey)
+        if (menuItem.GetValue(NavigationHelper.NavigateToProperty) is Type viewModelType)
         {
-            return pageService.GetPageType(pageKey) == sourcePageType;
+            return pageService.GetPageType(viewModelType) == sourcePageType;
         }
 
         return false;

@@ -4,6 +4,8 @@
   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
   xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
   xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+  xmlns:pages="using:Backtester.Views.Pages"
+  xmlns:vmpage="using:Backtester.ViewModels.Pages"
   xmlns:helpers="using:Backtester.Helpers"
   xmlns:behaviors="using:Backtester.Behaviors"
   xmlns:i="using:Microsoft.Xaml.Interactivity"
@@ -13,58 +15,47 @@
   Loaded="OnLoaded">
 
   <Grid>
-    <Grid
+    <StackPanel
       x:Name="AppTitleBar"
       Canvas.ZIndex="1"
+      Orientation="Horizontal"
       Height="{Binding ElementName=NavigationViewControl, Path=CompactPaneLength}"
       IsHitTestVisible="True"
-      VerticalAlignment="Top">
+      VerticalAlignment="Top"
+      Margin="60 0 0 0">
       <Image
         Source="/Assets/WindowIcon.ico"
-        HorizontalAlignment="Left"
-        Width="16" Height="16" />
-      <TextBlock
-        x:Name="AppTitleBarText"
         VerticalAlignment="Center"
-        TextWrapping="NoWrap"
+        Width="18"/>
+      <TextBlock
+        Text="MoneyCopyTester"
+        VerticalAlignment="Center"
         Style="{StaticResource CaptionTextBlockStyle}"
-        Margin="28,0,0,0"/>
-    </Grid>
+        Margin="12 0 0 0"/>
+    </StackPanel>
 
     <NavigationView
       x:Name="NavigationViewControl"
       Canvas.ZIndex="0"
-      IsBackButtonVisible="Visible"
-      IsBackEnabled="{Binding IsBackEnabled, Mode=OneWay}"
       SelectedItem="{Binding SelectedNavigationViewItem, Mode=OneWay}"
+      Header="{Binding SelectedNavigationViewItem.Content, Mode=OneWay}"
+      IsBackEnabled="{Binding IsBackEnabled, Mode=OneWay}"
+      IsBackButtonVisible="Visible"
       IsSettingsVisible="True"
-      ExpandedModeThresholdWidth="1280"
-      DisplayModeChanged="NavigationViewControl_DisplayModeChanged"
-      Header="{Binding SelectedNavigationViewItem.Content, Mode=OneWay}">
+      ExpandedModeThresholdWidth="800"
+      OpenPaneLength="200"
+      DisplayModeChanged="NavigationViewControl_DisplayModeChanged">
 
       <NavigationView.MenuItems>
-        <!--
-        TODO: Update item titles by updating <x:Uid>.Content entries in Strings/en-us/Resources.resw.
-        https://docs.microsoft.com/windows/uwp/app-resources/localize-strings-ui-manifest#refer-to-a-string-resource-identifier-from-xaml
-            
-        TODO: Update item icons by updating FontIcon.Glyph properties.
-        https://docs.microsoft.com/windows/apps/design/style/segoe-fluent-icons-font#icon-list
-        -->
         <NavigationViewItem
-          x:Uid="Shell_Main"
-          helpers:NavigationHelper.NavigateTo="Backtester.ViewModels.Pages.MainPageViewModel">
-          <NavigationViewItem.Icon>
-            <FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" Glyph="&#xe7c3;"/>
-          </NavigationViewItem.Icon>
-        </NavigationViewItem>
-        <NavigationViewItem
-          x:Uid="Shell_Coin"
-          helpers:NavigationHelper.NavigateTo="Backtester.ViewModels.Pages.CoinPageViewModel">
-          <NavigationViewItem.Icon>
-            <FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" Glyph="&#xe7c3;"/>
-          </NavigationViewItem.Icon>
-        </NavigationViewItem>
+          Content="Main" Icon="Home"
+          helpers:NavigationHelper.NavigateTo="vmpage:MainPageViewModel"/>
       </NavigationView.MenuItems>
+      <NavigationView.FooterMenuItems>
+        <NavigationViewItem
+          Content="Log" Icon="List"
+          helpers:NavigationHelper.NavigateTo="vmpage:LogPageViewModel"/>
+      </NavigationView.FooterMenuItems>
 
       <NavigationView.HeaderTemplate>
         <DataTemplate>
@@ -87,9 +78,7 @@
         </behaviors:NavigationViewHeaderBehavior>
       </i:Interaction.Behaviors>
 
-      <Grid Margin="{StaticResource NavigationViewPageContentMargin}">
-        <Frame x:Name="NavigationFrame" />
-      </Grid>
+      <Frame x:Name="NavigationFrame" Margin="{StaticResource NavigationViewPageContentMargin}"/>
     </NavigationView>
   </Grid>
 </Page>

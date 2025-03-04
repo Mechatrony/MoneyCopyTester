@@ -6,9 +6,10 @@
   xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
   xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
   xmlns:windowex="using:WinUIEx"
+  mc:Ignorable="d"
   MinWidth="500" MinHeight="500"
-  PersistenceId="MainWindow"
-  mc:Ignorable="d">
+  PersistenceId="MainWindow">
+  
   <Window.SystemBackdrop>
     <MicaBackdrop/>
   </Window.SystemBackdrop>

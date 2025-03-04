@@ -1,7 +1,5 @@
-﻿using Backtester.Crypto.Strategies;
-using Backtester.Services;
+﻿using Backtester.Services;
 using Backtester.Utils;
-using Backtester.ViewModels.Pages;
 using System.Collections.Specialized;
 
 namespace Backtester.Crypto;
@@ -9,7 +7,6 @@ namespace Backtester.Crypto;
 
 public class Coin(CoinInfo coinInfo, int leverage)
 {
-    private static readonly StrategyBase strategy = App.GetService<CoinPageViewModel>().SelectedStrategy;
     private static readonly BacktestService backtestService = App.GetService<BacktestService>();
 
     public static double MarketFeeRate { get; set; } = 0.0005d;
@@ -474,7 +471,7 @@ public class Coin(CoinInfo coinInfo, int leverage)
             if (!LongStopLossExist) return false;
             if (!price.IsSameOrLessThan(LongStopLossPrice)) return false;
 
-            if (CloseAllPosition(PositionSide.Long, LongStopLossPrice, strategy.MarketFeeRate, status))
+            if (CloseAllPosition(PositionSide.Long, LongStopLossPrice, MarketFeeRate, status))
             {
                 LongStopLossExist = false;
                 return true;
@@ -486,7 +483,7 @@ public class Coin(CoinInfo coinInfo, int leverage)
             if (!ShortStopLossExist) return false;
             if (!price.IsSameOrGreaterThan(ShortStopLossPrice)) return false;
 
-            if (CloseAllPosition(PositionSide.Short, ShortStopLossPrice, strategy.MarketFeeRate, status))
+            if (CloseAllPosition(PositionSide.Short, ShortStopLossPrice, MarketFeeRate, status))
             {
                 ShortStopLossExist = false;
                 return true;

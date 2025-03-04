@@ -13,7 +13,7 @@ public class PageService : IPageService
     public PageService()
     {
         Configure<MainPageViewModel, MainPage>();
-        Configure<CoinPageViewModel, CoinPage>();
+        Configure<LogPageViewModel, LogPage>();
         Configure<SettingsPageViewModel, SettingsPage>();
     }
 
@@ -29,6 +29,12 @@ public class PageService : IPageService
         }
 
         return pageType;
+    }
+
+    public Type GetPageType(Type viewModelType)
+    {
+        string key = viewModelType.FullName!;
+        return GetPageType(key);
     }
 
     private void Configure<VM, V>()

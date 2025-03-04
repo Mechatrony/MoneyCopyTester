@@ -3,11 +3,11 @@ using Backtester.ViewModels.Pages;
 
 namespace Backtester.Views.Pages;
 
-public sealed partial class CoinPage : Page
+public sealed partial class LogPage : Page
 {
-    public CoinPage()
+    public LogPage()
     {
-        DataContext = App.GetService<CoinPageViewModel>();
+        DataContext = App.GetService<LogPageViewModel>();
         InitializeComponent();
     }
 }

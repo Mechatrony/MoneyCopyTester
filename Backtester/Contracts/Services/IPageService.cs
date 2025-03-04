@@ -3,4 +3,5 @@
 public interface IPageService
 {
     Type GetPageType(string key);
+    Type GetPageType(Type viewModelType);
 }

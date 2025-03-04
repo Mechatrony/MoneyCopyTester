@@ -8,11 +8,8 @@ using System.Diagnostics.CodeAnalysis;
 
 namespace Backtester.Services;
 
-// For more information on navigation between pages see
-// https://github.com/microsoft/TemplateStudio/blob/main/docs/WinUI/navigation.md
-public class NavigationService : INavigationService
+public class NavigationService(IPageService pageService) : INavigationService
 {
-    private readonly IPageService pageService;
     private object? lastParameterUsed;
     private Frame? frame;
 
@@ -39,11 +36,6 @@ public class NavigationService : INavigationService
 
     [MemberNotNullWhen(true, nameof(Frame), nameof(frame))]
     public bool CanGoBack => Frame != null && Frame.CanGoBack;
-
-    public NavigationService(IPageService pageService)
-    {
-        this.pageService = pageService;
-    }
 
     private void RegisterFrameEvents()
     {
@@ -76,12 +68,12 @@ public class NavigationService : INavigationService
         return true;
     }
 
-    public bool NavigateTo(string pageKey, object? parameter = null, bool clearNavigation = false)
+    public bool NavigateTo(Type viewModelType, object? parameter = null, bool clearNavigation = false)
     {
         if (frame == null)
             return false;
 
-        Type toPageType = pageService.GetPageType(pageKey);
+        Type toPageType = pageService.GetPageType(viewModelType);
 
         if (frame.Content?.GetType() != toPageType
             || (parameter != null && !parameter.Equals(lastParameterUsed)))

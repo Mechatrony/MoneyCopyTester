@@ -11,7 +11,7 @@ public interface INavigationService
 
     Frame? Frame { get; set; }
 
-    bool NavigateTo(string pageKey, object? parameter = null, bool clearNavigation = false);
+    bool NavigateTo(Type toPageType, object? parameter = null, bool clearNavigation = false);
 
     bool GoBack();
 
